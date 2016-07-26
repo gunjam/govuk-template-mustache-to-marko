@@ -1,0 +1,49 @@
+{
+  "name": "govuk-template-marko",
+  "description": "GOV.UK template Marko layout.",
+  "version": "0.1.0",
+  "keywords": [
+    "marko-taglib",
+    "marko",
+    "gov.uk",
+    "dwp"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gunjam/govuk-template-marko.git"
+  },
+  "scripts": {
+    "postinstall": "gulp",
+    "test": "xo"
+  },
+  "author": "Niall Molloy <niallmolloy.digitaldwp@gmail.com>",
+  "maintainers": [
+    "Niall Molloy <niallmolloy.digitaldwp@gmail.com>"
+  ],
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-flatten": "^0.3.0",
+    "gulp-hogan": "^2.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "lasso": "^2.5.5",
+    "marko": "^3.8.1",
+    "marko-layout": "^2.0.2",
+    "govuk_template_mustache": "0.17.3"
+  },
+  "devDependencies": {
+    "xo": "^0.16.0"
+  },
+  "license": "Apache-2.0",
+  "xo": {
+    "esnext": true,
+    "space": true,
+    "env": [
+      "node"
+    ],
+    "ignores": [
+      "static/**",
+      "**/*.marko.js"
+    ]
+  }
+}
