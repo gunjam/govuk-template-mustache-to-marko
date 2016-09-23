@@ -25,10 +25,10 @@
     "gulp-hogan": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
-    "lasso": "^2.5.8",
-    "marko": "^3.10.0",
+    "lasso": "^2.5.9",
+    "marko": "^3.10.1",
     "marko-layout": "^2.0.2",
-    "govuk_template_mustache": "0.18.1"
+    "govuk_template_mustache": "0.18.2"
   },
   "devDependencies": {
     "xo": "^0.16.0"
