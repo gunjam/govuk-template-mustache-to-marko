@@ -28,7 +28,7 @@ gulp.task('template', () => {
   return gulp.src('node_modules/govuk_*/**/layouts/govuk_template.html')
     .pipe(flatten())
     .pipe(replace(/{{[{]?(.*?)}}[}]?/g, '{{{$1}}}'))
-    .pipe(replace(/\n/, '<lasso-page package-path="${data.packagePath}" dependencies=["./static/javascripts/govuk-template.js"]/>\n'))
+    .pipe(replace(/\n/, '<lasso-page package-path="${data.packagePath}" dependencies=["./static/javascripts/govuk-template.js"] name="${data.name}"/>\n'))
     .pipe(replace(/(<html class="lte-ie8" lang=")(.+)(">)/, '$!{\'$1\'}$2$!{\'$3\'}'))
     .pipe(replace(/<script.*?govuk-template\.js.*<\/script>/, ''))
     .pipe(hogan({
