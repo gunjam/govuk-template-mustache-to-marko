@@ -25,13 +25,13 @@
     "gulp-hogan": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
-    "lasso": "^2.5.9",
-    "marko": "^3.10.1",
+    "lasso": "^2.6.0",
+    "marko": "^3.11.8",
     "marko-layout": "^2.0.2",
-    "govuk_template_mustache": "0.18.2"
+    "govuk_template_mustache": "0.19.0"
   },
   "devDependencies": {
-    "xo": "^0.16.0"
+    "xo": "^0.17.0"
   },
   "license": "Apache-2.0",
   "xo": {
