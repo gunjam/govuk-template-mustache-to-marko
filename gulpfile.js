@@ -10,7 +10,7 @@ const replace = require('gulp-replace');
 gulp.task('move', () => {
   gulp.src('node_modules/govuk_*/**/*.@(js|css|png|gif|jpg|jpeg|ico|eot|svg)')
     .pipe(rename(path => {
-      path.dirname = path.dirname.replace(/^.*?[\\\/](?:assets)?/, '').replace(/\b(?=icon-)/, 'icons/');
+      path.dirname = path.dirname.replace(/^.*?[\\/](?:assets)?/, '').replace(/\b(?=icon-)/, 'icons/');
       if (path.basename.indexOf('icon-') === 0) {
         path.dirname += '/icons';
       }
@@ -53,7 +53,9 @@ gulp.task('template', () => {
       propositionHeader: '<layout-placeholder name="proposition-header"/>',
       skipLinkMessage: '<layout-placeholder name="skip-link-message"/>'
     }))
-    .pipe(replace(/(<!-{0,2}){1,2}(\[[^\[\]]+\])?-{0,2}>(<!-->)?/g, '$!{"$&"}'))
+    .pipe(replace(/(<!-{0,2}){1,2}(\[[^\[\]]+\])?-{0,2}>(<!-->)?/g, '$!{\'$&\'}'))
+    .pipe(replace(/(<!DOCTYPE html>)\n/g, '$1'))
+    .pipe(replace(/(\$!{'<!\[endif]-->'})\n/g, '$1'))
     .pipe(replace(/<(link|meta|img)(.+href="|.+src="|.+property="og:image" content=")([^?]+)[^"]+([^>]*") *\/?>/g, (match, p1, p2, p3, p4, offset) => `<lasso-resource path=".${p3}" var="r${offset}"/><${p1}${p2}\${r${offset}.url}${p4}/>`))
     .pipe(replace(/(<script.+src=")([^?]+)[^"]+([^>]*" *><\/script>)/g, (match, p1, p2, p3, offset) => `<lasso-resource path=".${p2}" var="r${offset}"/>${p1}\${r${offset}.url}${p3}`))
     .pipe(rename('template.marko'))
