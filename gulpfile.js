@@ -7,6 +7,8 @@ const hogan = require('gulp-hogan');
 const rename = require('gulp-rename');
 const replace = require('gulp-replace');
 
+const ASSET_PATH = 'static'
+
 gulp.task('move', () => {
   gulp.src('node_modules/govuk_*/**/*.@(js|css|png|gif|jpg|jpeg|ico|eot|svg)')
     .pipe(rename(path => {
@@ -15,43 +17,43 @@ gulp.task('move', () => {
         path.dirname += '/icons';
       }
     }))
-    .pipe(gulp.dest('static'));
+    .pipe(gulp.dest(ASSET_PATH));
 
   gulp.src('assets/**/*.@(js|css|png|gif|jpg|jpeg|ico|eot)')
     .pipe(rename(path => {
       path.dirname = path.dirname.replace('assets', '');
     }))
-    .pipe(gulp.dest('static'));
+    .pipe(gulp.dest(ASSET_PATH));
 });
 
 gulp.task('template', () => {
   return gulp.src('node_modules/govuk_*/**/layouts/govuk_template.html')
     .pipe(flatten())
     .pipe(replace(/{{[{]?(.*?)}}[}]?/g, '{{{$1}}}'))
-    .pipe(replace(/\n/, '<lasso-page package-path="${data.packagePath}" dependencies=["./static/javascripts/govuk-template.js"] name="${data.name}"/>\n'))
+    .pipe(replace(/\n/, '<lasso-page package-path="${input.packagePath}" dependencies=["./' + ASSET_PATH + '/javascripts/govuk-template.js"] name="${input.name}"/>\n'))
     .pipe(replace(/(<html class="lte-ie8" lang=")(.+)(">)/, '$!{\'$1\'}$2$!{\'$3\'}'))
     .pipe(replace(/<script.*?govuk-template\.js.*<\/script>/, ''))
     .pipe(hogan({
-      assetPath: '/static/',
-      afterHeader: '<layout-placeholder name="after-header"/>',
-      bodyClasses: '${data.bodyClasses}',
-      bodyEnd: '<layout-placeholder name="body-end"><lasso-body/></layout-placeholder>',
-      content: '<layout-placeholder name="content"/>',
-      cookieMessage: '<layout-placeholder name="cookie-message"/>',
-      crownCopyrightMessage: '<layout-placeholder name="crown-copyright-message"/>',
-      footerSupportLinks: '<layout-placeholder name="footer-support-links"/>',
-      footerTop: '<layout-placeholder name="footer-top"/>',
-      globalHeaderText: '<layout-placeholder name="global-header-text">GOV.UK</layout-placeholder>',
-      head: '<layout-placeholder name="head"><lasso-head/></layout-placeholder>',
-      headerClass: '${data.headerClass}',
-      homepageUrl: '${data.homepageUrl}',
-      htmlLang: '${data.htmlLang}',
-      insideHeader: '<layout-placeholder name="inside-header"/>',
-      licenceMessage: '<layout-placeholder name="licence-message"/>',
-      logoLinkTitle: '${data.logoLinkTitle}',
-      pageTitle: '<layout-placeholder name="page-title"/>',
-      propositionHeader: '<layout-placeholder name="proposition-header"/>',
-      skipLinkMessage: '<layout-placeholder name="skip-link-message"/>'
+      assetPath: '/' + ASSET_PATH + '/',
+      afterHeader: '<include(input.afterHeader)/>',
+      bodyClasses: '${input.bodyClasses}',
+      bodyEnd: '<lasso-body/><include(input.bodyEnd)/>',
+      content: '<include(input.content)/>',
+      cookieMessage: '<include(input.cookieMessage)/>',
+      crownCopyrightMessage: '<include(input.crownCopyrightMessage)/>',
+      footerSupportLinks: '<include(input.footerSupportLinks)/>',
+      footerTop: '<include(input.footerTop)/>',
+      globalHeaderText: '<if(input.globalHeaderText)><include(input.globalHeaderText)/></if><else>GOV.UK</else>',
+      head: '<lasso-head/><include(input.head)/>',
+      headerClass: '${input.headerClass}',
+      homepageUrl: '${input.homepageUrl}',
+      htmlLang: '${input.htmlLang}',
+      insideHeader: '<include(input.insideHeader)/>',
+      licenceMessage: '<include(input.licenceMessage)/>',
+      logoLinkTitle: '${input.logoLinkTitle}',
+      pageTitle: '${input.pageTitle}',
+      propositionHeader: '<include(input.propositionHeader)/>',
+      skipLinkMessage: '<include(input.skipLinkMessage)/>'
     }))
     .pipe(replace(/(<!-{0,2}){1,2}(\[[^\[\]]+\])?-{0,2}>(<!-->)?/g, '$!{\'$&\'}'))
     .pipe(replace(/(<!DOCTYPE html>)\n/g, '$1'))
